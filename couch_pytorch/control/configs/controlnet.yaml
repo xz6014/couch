@@ -1,0 +1,46 @@
+Train:
+  epoch: 15
+  lr: 0.001
+  lr_decay: 0.999
+  batch_size: 32
+
+  arch: lstm
+  num_experts: 10
+
+  hidden_dim: 128
+  latent_dim: 128
+
+  num_encoders: 0
+  start_hand: 66
+  start_control: 66
+  dim_control: 56
+  dim_exclude: 84
+
+  traj_length: 7
+  num_contacts: 2
+
+  weight_mse: 0.1
+  weight_reg: 2
+  weight_match: 0
+  weight_init: 5
+  weight_entropy: 0.02
+
+  norm: False
+  normalize: False
+
+  ckpt_name: controlnet
+  data_path: dataset
+
+  scheduled_sampling: True
+
+  L: 60
+  E1: 3
+  E2: 10
+
+  mix_contact: False
+  train: True
+
+  negative: True
+  match: True
+  match_threshold: 0.3
+

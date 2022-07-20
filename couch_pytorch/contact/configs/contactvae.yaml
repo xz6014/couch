@@ -1,0 +1,20 @@
+Train:
+  epoch: 150
+  lr: 0.0001
+  lr_decay: 0.0025
+  batch_size: 32
+  kl_w: 0.5
+
+
+  hidden_dim: 128
+  latent_dim: 128
+  z_dim: 16
+
+  train: True
+  
+  normalize: False
+  ckpt_name: contactvae
+  data_path: dataset
+
+
+#

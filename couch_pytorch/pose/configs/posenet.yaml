@@ -1,0 +1,45 @@
+Train:
+  epoch: 2
+  lr: 0.001
+  lr_decay: 0.999
+  batch_size: 32
+
+  arch: nsm
+  num_experts: 10
+
+  hidden_dim: 128
+  latent_dim: 128
+
+  num_encoders: 5
+  start_goal: 355
+  start_environment: 472
+  start_interaction: 2506
+  start_hand: 4554
+  start_gating: 4658
+  dim_gating: 416
+
+  traj_length: 6
+
+  sit_only: False
+
+  direct: False
+
+  future: 6
+
+  recon_weight: 1
+  direct_weight: 10
+  end_weight: 0.1
+  hull_scale_aug: 1.1
+
+  mode: both
+
+  unrolling: False
+
+  norm: False
+
+  step: 5
+
+  normalize: True
+  ckpt_name: posenet
+  data_path: dataset
+
