@@ -87,8 +87,6 @@ public class  COUCH_testing_subject_starting: NeuralAnimation {
 	private int[] BoneIndexes;
 	private List<string> BoneNames = new List<string> {"m_avg_R_Wrist", "m_avg_L_Wrist"};
 
-	private bool trajectroy_sampled = false;
-	private bool use_hand_net = true;
 	public ControlNetwork ControlNetwork;
 	public List<Vector3> LeftContacts;
 	public List<Vector3> RightContacts;
@@ -97,13 +95,8 @@ public class  COUCH_testing_subject_starting: NeuralAnimation {
 	private bool[,] InitialContactSwitch;
 
 
-	private static bool UseMotionClass = false;
-	private int[] modes_int;
-	private int MotionClass;
-	private Vector2 MotionClassVector;
 
-
-	public int TestingInitialization = 15;
+	public int TestingSequence = 17;
 
 	private int chair_idx;
 	private int rh_contact_idx;
@@ -125,7 +118,7 @@ public class  COUCH_testing_subject_starting: NeuralAnimation {
 
 	protected override void ImportTestingSequence() {
 		string[] assets = AssetDatabase.FindAssets("t:MotionData", new string[1]{"Assets/MotionCapture/testing"});
-		File = (MotionData)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(assets[TestingInitialization]), typeof(MotionData));
+		File = (MotionData)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(assets[TestingSequence]), typeof(MotionData));
 	}
 	
 	public Controller GetController() {
@@ -365,7 +358,7 @@ public class  COUCH_testing_subject_starting: NeuralAnimation {
 		Controller.Update();
 
 		//Get Root
-		// Debug.Log(RootSeries.Transformations[30]);
+
 		// TimeSeries.Pivot = 30; 
 		Matrix4x4 root = RootSeries.Transformations[TimeSeries.Pivot];
 
@@ -543,7 +536,6 @@ public class  COUCH_testing_subject_starting: NeuralAnimation {
 	}
 
 	protected override void Read() {
-		// Debug.Log(frame_num);
 		frame_num ++;
 		frame_count ++;
 		if (frame_num == frame_num_init + 1){
@@ -722,7 +714,6 @@ public class  COUCH_testing_subject_starting: NeuralAnimation {
 			GoalSeries.Values[sample.Index] = Utility.Interpolate(GoalSeries.Values[sample.Index], actions, weight * NetworkControl);
 		}
 
-		// Debug.Log(string.Format("{0} {1}", ContactSeries.LocalPhases[TimeSeries.Pivot][0],  ContactSeries.LocalPhases[TimeSeries.Pivot][1]));
 
 		// //Read Future Contacts
 		float[] contacts = PoseNetwork.Read(ContactSeries.Bones.Length);
@@ -972,9 +963,9 @@ public class  COUCH_testing_subject_starting: NeuralAnimation {
 
 		// Create Selected/Sampled Scene 
 		string [] obj_files = System.IO.Directory.GetFiles("Assets/Resources/Assets/chairs", "*.prefab");
-		string tmp = obj_files[0].Split('\\').Last().Split('.')[0];
+		string tmp = obj_files[0].Split('/').Last().Split('.')[0];
 		List<string> chairs =  new List<string> {};
-		GameObject instance = Instantiate(Resources.Load("Assets\\chairs" + '\\' + tmp, typeof(GameObject))) as GameObject;
+		GameObject instance = Instantiate(Resources.Load("Assets/chairs" + '/' + tmp, typeof(GameObject))) as GameObject;
 		for (int i=0; i<instance.transform.childCount; i++){
 			GameObject gameObject = instance.transform.GetChild(i).gameObject;
 			if(gameObject.GetComponent<Interaction>() != null){
@@ -995,9 +986,9 @@ public class  COUCH_testing_subject_starting: NeuralAnimation {
 		string asset_name = chair_name.Split('_')[1];
 		string which_chair = chair_name.Split('_')[2];
 
-		string lh_contact_file = "Assets/MotionCapture/Contacts/lh" + '\\' + session_name + '_' +  asset_name + '\\' + which_chair + ".txt";
+		string lh_contact_file = "Assets/MotionCapture/Contacts/lh" + '/' + session_name + '_' +  asset_name + '/' + which_chair + ".txt";
 		string[] lh_contacts =  System.IO.File.ReadAllLines(lh_contact_file);
-		string rh_contact_file = "Assets/MotionCapture/Contacts/rh" + '\\' + session_name + '_' +  asset_name + '\\' + which_chair + ".txt";
+		string rh_contact_file = "Assets/MotionCapture/Contacts/rh" + '/' + session_name + '_' +  asset_name + '/' + which_chair + ".txt";
 		string[] rh_contacts =  System.IO.File.ReadAllLines(rh_contact_file);
 
 		lh_contact_idx = rnd.Next(0, lh_contacts.Length-1);

@@ -65,7 +65,7 @@ public class COUCH_Sample: MonoBehaviour {
 				Controller.enabled = false;
 		
 				SceneManager.SetActiveScene(SceneManager.GetSceneAt(1));
-				GameObject scene = GameObject.Find("session1_chair1(Clone)");
+				GameObject scene = GameObject.Find("chairs(Clone)");
 				for(int k = 0; k < scene.transform.transform.childCount; k++)
 				{
 					GameObject tmp = scene.transform.transform.GetChild(k).gameObject;
